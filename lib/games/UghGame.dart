@@ -9,7 +9,7 @@ class UghGame extends FlameGame{
 
   final world = World();
   late final CameraComponent cameraComponent;
-  late EmberPlayer _player;
+  late EmberPlayer _player1, _player2;
 
   @override
   Future<void> onLoad() async {
@@ -27,9 +27,15 @@ class UghGame extends FlameGame{
 
     addAll([cameraComponent,world]);
 
-    _player = EmberPlayer(
+    _player1 = EmberPlayer(
       position: Vector2(128, canvasSize.y - 70),
     );
-    world.add(_player);
+
+    _player2 = EmberPlayer(
+      position: Vector2(228, canvasSize.y - 70),
+    );
+
+    world.add(_player1);
+    world.add(_player2);
   }
 }
