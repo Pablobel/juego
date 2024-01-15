@@ -53,11 +53,11 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents{
     }
 
     _player1 = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 70),
+      position: Vector2(128, canvasSize.y - 70),iTipo: EmberPlayer.PLAYER_1,
     );
 
     _player2 = EmberPlayer(
-      position: Vector2(228, canvasSize.y - 70),
+      position: Vector2(228, canvasSize.y - 70),iTipo: EmberPlayer.PLAYER_2,
     );
 
     world.add(_player1);
@@ -67,4 +67,6 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents{
   Color backgroundColor(){
     return Color.fromRGBO(255,255,0,1.0);
   }
+
+
 }
