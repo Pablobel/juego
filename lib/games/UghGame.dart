@@ -33,6 +33,14 @@ class UghGame extends FlameGame{
     mapComponent = await TiledComponent.load('mapa1.tmx',Vector2.all(32));
   world.add(mapComponent);
 
+  ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
+
+  for(final estrella in estrellas!.objects){
+    SpriteComponent spriteStar = SpriteComponent(position:Vector2(estrella.x,estrella.y));
+    spriteStar.sprite=Sprite(images.fromCache('star.png'));
+    add(spriteStar);
+  }
+
     _player1 = EmberPlayer(
       position: Vector2(128, canvasSize.y - 70),
     );
@@ -43,10 +51,9 @@ class UghGame extends FlameGame{
 
     world.add(_player1);
     world.add(_player2);
-
-    @override
-    Color background(){
-      return Color.fromRGBO(255,255,255,1);
-    }
+  }
+  @override
+  Color backgroundColor(){
+    return Color.fromRGBO(255,255,0,1.0);
   }
 }
