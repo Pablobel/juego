@@ -2,13 +2,16 @@ import 'dart:ui';
 
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'dart:async';
 
-import '../players/EmberPlayer.dart';
+import 'package:juego/elementos/Estrella.dart';
+import 'package:juego/elementos/Gota.dart';
+import 'package:juego/players/EmberPlayer.dart';
 
-class UghGame extends FlameGame{
+class UghGame extends FlameGame with HasKeyboardHandlerComponents{
 
   final world = World();
   late final CameraComponent cameraComponent;
@@ -24,6 +27,7 @@ class UghGame extends FlameGame{
       'heart.png',
       'star.png',
       'water_enemy.png',
+      'tilemap1_32.png'
     ]);
 
     cameraComponent = CameraComponent(world:world);
@@ -36,10 +40,17 @@ class UghGame extends FlameGame{
   ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
 
   for(final estrella in estrellas!.objects){
-    SpriteComponent spriteStar = SpriteComponent(position:Vector2(estrella.x,estrella.y));
-    spriteStar.sprite=Sprite(images.fromCache('star.png'));
+    Estrella spriteStar = Estrella(position:Vector2(estrella.x,estrella.y));
     add(spriteStar);
   }
+
+    ObjectGroup? gotas = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
+
+    for(final gota in gotas!.objects){
+      Gota spriteGota = Gota(position:Vector2(gota.x,gota.y),
+      size:Vector2.all(64));
+      add(spriteGota);
+    }
 
     _player1 = EmberPlayer(
       position: Vector2(128, canvasSize.y - 70),
