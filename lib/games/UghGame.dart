@@ -11,8 +11,7 @@ import 'package:juego/elementos/Estrella.dart';
 import 'package:juego/elementos/Gota.dart';
 import 'package:juego/players/EmberPlayer.dart';
 
-class UghGame extends FlameGame with HasKeyboardHandlerComponents{
-
+class UghGame extends FlameGame with HasKeyboardHandlerComponents {
   final world = World();
   late final CameraComponent cameraComponent;
   late EmberPlayer _player1, _player2;
@@ -21,7 +20,6 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents{
   @override
   Future<void> onLoad() async {
     await images.loadAll([
-
       'ember.png',
       'heart_half.png',
       'heart.png',
@@ -30,43 +28,45 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents{
       'tilemap1_32.png'
     ]);
 
-    cameraComponent = CameraComponent(world:world);
+    cameraComponent = CameraComponent(world: world);
     cameraComponent.viewfinder.anchor = Anchor.topLeft;
-    addAll([cameraComponent,world]);
+    addAll([cameraComponent, world]);
 
-    mapComponent = await TiledComponent.load('mapa1.tmx',Vector2.all(32));
-  world.add(mapComponent);
+    mapComponent = await TiledComponent.load('mapa1.tmx', Vector2.all(32));
+    world.add(mapComponent);
 
-  ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
+    ObjectGroup? estrellas =
+        mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
 
-  for(final estrella in estrellas!.objects){
-    Estrella spriteStar = Estrella(position:Vector2(estrella.x,estrella.y));
-    add(spriteStar);
-  }
+    for (final estrella in estrellas!.objects) {
+      Estrella spriteStar = Estrella(position: Vector2(estrella.x, estrella.y));
+      add(spriteStar);
+    }
 
     ObjectGroup? gotas = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
 
-    for(final gota in gotas!.objects){
-      Gota spriteGota = Gota(position:Vector2(gota.x,gota.y),
-      size:Vector2.all(64));
+    for (final gota in gotas!.objects) {
+      Gota spriteGota =
+          Gota(position: Vector2(gota.x, gota.y), size: Vector2.all(64));
       add(spriteGota);
     }
 
     _player1 = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 70),iTipo: EmberPlayer.PLAYER_1,
+      position: Vector2(128, canvasSize.y - 70),
+      iTipo: EmberPlayer.PLAYER_1,
     );
 
     _player2 = EmberPlayer(
-      position: Vector2(228, canvasSize.y - 70),iTipo: EmberPlayer.PLAYER_2,
+      position: Vector2(228, canvasSize.y - 70),
+      iTipo: EmberPlayer.PLAYER_2,
     );
 
     world.add(_player1);
     world.add(_player2);
   }
+
   @override
-  Color backgroundColor(){
-    return Color.fromRGBO(255,255,0,1.0);
+  Color backgroundColor() {
+    return Color.fromRGBO(255, 255, 0, 1.0);
   }
-
-
 }
