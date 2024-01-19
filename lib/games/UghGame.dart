@@ -1,20 +1,22 @@
 import 'dart:ui';
 
-import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:juego/bodies/EmberPlayerBody.dart';
+import 'package:juego/bodies/TierraBody.dart';
 import 'dart:async';
-
 import 'package:juego/elementos/Estrella.dart';
 import 'package:juego/elementos/Gota.dart';
 import 'package:juego/players/EmberPlayer.dart';
 
-class UghGame extends FlameGame with HasKeyboardHandlerComponents,HasCollisionDetection {
-  final world = World();
+class UghGame extends Forge2DGame
+    with HasKeyboardHandlerComponents, HasCollisionDetection {
+  //final world = World();
   late final CameraComponent cameraComponent;
-  late EmberPlayer _player1, _player2;
+  late EmberPlayerBody _player1, _player2;
   late TiledComponent mapComponent;
 
   @override
@@ -51,15 +53,22 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents,HasCollisionDe
       add(spriteGota);
     }
 
-    _player1 = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 70),
-      iTipo: EmberPlayer.PLAYER_1,
-    );
+    ObjectGroup? tierras = mapComponent.tileMap.getLayer<ObjectGroup>("tierra");
 
-    _player2 = EmberPlayer(
-      position: Vector2(228, canvasSize.y - 70),
-      iTipo: EmberPlayer.PLAYER_2,
-    );
+    for (final tiledObjectTierra in tierras!.objects) {
+      TierraBody tierraBody = TierraBody(tiledBody: tiledObjectTierra);
+      add(tierraBody);
+    }
+
+    _player1 = EmberPlayerBody(
+        initialPosition: Vector2(150, canvasSize.y - 600),
+        iTipo: EmberPlayerBody.PLAYER_1,
+        tamano: Vector2(50, 100));
+
+    _player2 = EmberPlayerBody(
+        initialPosition: Vector2(0, canvasSize.y - 0),
+        iTipo: EmberPlayerBody.PLAYER_2,
+        tamano: Vector2(50, 100));
 
     world.add(_player1);
     world.add(_player2);
@@ -67,6 +76,6 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents,HasCollisionDe
 
   @override
   Color backgroundColor() {
-    return Color.fromRGBO(255, 255, 0, 1.0);
+    return const Color.fromRGBO(255, 255, 0, 1.0);
   }
 }
