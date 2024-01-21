@@ -19,6 +19,8 @@ class UghGame extends Forge2DGame
   late EmberPlayerBody _player1, _player2;
   late TiledComponent mapComponent;
 
+  UghGame():super(gravity:Vector2(0,15));
+
   @override
   Future<void> onLoad() async {
     await images.loadAll([

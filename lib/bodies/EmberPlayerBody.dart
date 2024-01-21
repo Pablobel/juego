@@ -7,7 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import '../players/EmberPlayer.dart';
 
-class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallbacks {
+class EmberPlayerBody extends BodyComponent
+    with KeyboardHandler, ContactCallbacks {
   bool mirandoDerecha1 = true;
   bool mirandoDerecha2 = true;
   int horizontalDirection = 0;
@@ -55,20 +56,10 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
   };
 
   EmberPlayerBody(
-      {required this.initialPosition, required this.iTipo, required this.tamano})
-      : super(
-          fixtureDefs: [
-            FixtureDef(
-              CircleShape()..radius = 35,
-              restitution: 0.8,
-              friction: 0.4,
-            ),
-          ],
-          bodyDef: BodyDef(
-              angularDamping: 0.8,
-              position: initialPosition ?? Vector2.zero(),
-              type: BodyType.dynamic),
-        );
+      {required this.initialPosition,
+      required this.iTipo,
+      required this.tamano})
+      : super();
 
   @override
   Future<void> onLoad() {
@@ -83,7 +74,8 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
     //print("TECLA:" + event.data.logicalKey.keyId.toString());
     horizontalDirection = 0;
     verticalDirection = 0;
-    if (keysPressed.containsAll(diagonalNO) && iTipo == EmberPlayerBody.PLAYER_1) {
+    if (keysPressed.containsAll(diagonalNO) &&
+        iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = -10;
       verticalDirection = -10;
       if (mirandoDerecha1) {
@@ -199,16 +191,17 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
   @override
   Body createBody() {
     BodyDef definicionCuerpo = BodyDef(
-        position:initialPosition, type: BodyType.dynamic, fixedRotation: true);
+        position: initialPosition, type: BodyType.dynamic, fixedRotation: true,userData: this);
     Body cuerpo = world.createBody(definicionCuerpo);
 
     final shape = CircleShape();
     shape.radius = tamano.x / 2;
     FixtureDef fixtureDef = FixtureDef(
-      shape,
-      restitution: 0.5,
+      shape,density: 0.5,friction:0.2,
+      restitution: 0.2,userData: this
     );
-    debugMode = true;
+    //debugMode = true;
+    cuerpo..createFixture(fixtureDef);
     return cuerpo;
   }
 
@@ -216,8 +209,9 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
   void update(double dt) {
     velocidad.x = horizontalDirection * aceleracion;
     velocidad.y = verticalDirection * aceleracion;
-    position.x += velocidad.x;
-    position.y += velocidad.y;
+    Vector2 impulse = Vector2(
+        horizontalDirection * aceleracion, verticalDirection * aceleracion);
+    body.applyLinearImpulse(impulse * dt*1000);
     super.update(dt);
   }
 }
