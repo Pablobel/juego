@@ -6,6 +6,7 @@ import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:juego/bodies/EmberPlayerBody.dart';
+import 'package:juego/bodies/GotaBody.dart';
 import 'package:juego/bodies/TierraBody.dart';
 import 'dart:async';
 import 'package:juego/elementos/Estrella.dart';
@@ -50,9 +51,9 @@ class UghGame extends Forge2DGame
     ObjectGroup? gotas = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
 
     for (final gota in gotas!.objects) {
-      Gota spriteGota =
-          Gota(position: Vector2(gota.x, gota.y), size: Vector2.all(64));
-      add(spriteGota);
+      GotaBody gotaBody = GotaBody(posicionInicial: Vector2(gota.x,gota.y),tamano: Vector2(25,25));
+
+      add(gotaBody);
     }
 
     ObjectGroup? tierras = mapComponent.tileMap.getLayer<ObjectGroup>("tierra");

@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/body_component.dart';
@@ -79,7 +78,7 @@ class EmberPlayerBody extends BodyComponent
       horizontalDirection = -10;
       verticalDirection = -10;
       if (mirandoDerecha1) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = false;
       }
     } else if (keysPressed.containsAll(diagonalNE) &&
@@ -87,7 +86,7 @@ class EmberPlayerBody extends BodyComponent
       horizontalDirection = 10;
       verticalDirection = -10;
       if (!mirandoDerecha1) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = true;
       }
     } else if (keysPressed.containsAll(diagonalSE) &&
@@ -95,7 +94,7 @@ class EmberPlayerBody extends BodyComponent
       horizontalDirection = 10;
       verticalDirection = 10;
       if (!mirandoDerecha1) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = true;
       }
     } else if (keysPressed.containsAll(diagonalSO) &&
@@ -103,7 +102,7 @@ class EmberPlayerBody extends BodyComponent
       horizontalDirection = -10;
       verticalDirection = 10;
       if (mirandoDerecha1) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = false;
       }
     } else if (keysPressed.containsAll(diagonalNO2) &&
@@ -111,7 +110,7 @@ class EmberPlayerBody extends BodyComponent
       horizontalDirection = -10;
       verticalDirection = -10;
       if (mirandoDerecha2) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha2 = false;
       }
     } else if (keysPressed.containsAll(diagonalNE2) &&
@@ -119,7 +118,7 @@ class EmberPlayerBody extends BodyComponent
       horizontalDirection = 10;
       verticalDirection = -10;
       if (!mirandoDerecha2) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha2 = true;
       }
     } else if (keysPressed.containsAll(diagonalSE2) &&
@@ -127,7 +126,7 @@ class EmberPlayerBody extends BodyComponent
       horizontalDirection = 10;
       verticalDirection = 10;
       if (!mirandoDerecha2) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha2 = true;
       }
     } else if (keysPressed.containsAll(diagonalSO2) &&
@@ -135,21 +134,21 @@ class EmberPlayerBody extends BodyComponent
       horizontalDirection = -10;
       verticalDirection = 10;
       if (mirandoDerecha2) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha2 = false;
       }
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = 10;
       if (!mirandoDerecha1) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = true;
       }
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = -10;
       if (mirandoDerecha1) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = false;
       }
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowUp) &&
@@ -162,14 +161,14 @@ class EmberPlayerBody extends BodyComponent
         iTipo == EmberPlayerBody.PLAYER_2) {
       horizontalDirection = 10;
       if (!mirandoDerecha2) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha2 = true;
       }
     } else if (keysPressed.contains(LogicalKeyboardKey.keyA) &&
         iTipo == EmberPlayerBody.PLAYER_2) {
       horizontalDirection = -10;
       if (mirandoDerecha2) {
-        //flipHorizontally();
+        emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha2 = false;
       }
     } else if (keysPressed.contains(LogicalKeyboardKey.keyW) &&

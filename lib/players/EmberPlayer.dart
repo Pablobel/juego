@@ -22,7 +22,6 @@ class EmberPlayer extends SpriteAnimationComponent
   final _defaultColor = Colors.red;
   late ShapeHitbox hitbox;
 
-
   EmberPlayer(
       {required super.position, required this.iTipo, required super.size})
       : super(anchor: Anchor.center);
@@ -47,4 +46,5 @@ class EmberPlayer extends SpriteAnimationComponent
     hitbox.isSolid = true;
     add(hitbox);
   }
+
 }

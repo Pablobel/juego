@@ -7,8 +7,7 @@ import 'package:juego/games/UghGame.dart';
 class Gota extends SpriteAnimationComponent
     with HasGameReference<UghGame>, CollisionCallbacks {
 
-  bool movimientoDerecha = true;
-  int numeroMovimientos = 0;
+
   final _collisionStartColor = Colors.black87;
   final _defaultColor = Colors.red;
   late ShapeHitbox hitbox;
@@ -37,20 +36,5 @@ class Gota extends SpriteAnimationComponent
     add(hitbox);
   }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
 
-    if (movimientoDerecha) {
-      position.x += 1;
-      numeroMovimientos += 1;
-    } else {
-      position.x -= 1;
-      numeroMovimientos += 1;
-    }
-    if (numeroMovimientos == 200) {
-      numeroMovimientos = 0;
-      movimientoDerecha = !movimientoDerecha;
-    }
-  }
 }
