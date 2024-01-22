@@ -6,6 +6,7 @@ import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:juego/bodies/EmberPlayerBody.dart';
+import 'package:juego/bodies/EstrellaBody.dart';
 import 'package:juego/bodies/GotaBody.dart';
 import 'package:juego/bodies/TierraBody.dart';
 import 'dart:async';
@@ -20,7 +21,7 @@ class UghGame extends Forge2DGame
   late EmberPlayerBody _player1, _player2;
   late TiledComponent mapComponent;
 
-  UghGame():super(gravity:Vector2(0,15));
+  UghGame() : super(gravity: Vector2(0, 15));
 
   @override
   Future<void> onLoad() async {
@@ -44,14 +45,17 @@ class UghGame extends Forge2DGame
         mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
 
     for (final estrella in estrellas!.objects) {
-      Estrella spriteStar = Estrella(position: Vector2(estrella.x, estrella.y));
-      add(spriteStar);
+      EstrellaBody estrellaBody = EstrellaBody(
+          posicionInicial: Vector2(estrella.x, estrella.y),
+          tamano: Vector2(25, 25));
+      add(estrellaBody);
     }
 
     ObjectGroup? gotas = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
 
     for (final gota in gotas!.objects) {
-      GotaBody gotaBody = GotaBody(posicionInicial: Vector2(gota.x,gota.y),tamano: Vector2(25,25));
+      GotaBody gotaBody = GotaBody(
+          posicionInicial: Vector2(gota.x, gota.y), tamano: Vector2(25, 25));
 
       add(gotaBody);
     }
@@ -67,12 +71,12 @@ class UghGame extends Forge2DGame
         initialPosition: Vector2(150, canvasSize.y - 600),
         iTipo: EmberPlayerBody.PLAYER_1,
         tamano: Vector2(50, 100));
-
+    _player1.onBeginContact;
     _player2 = EmberPlayerBody(
         initialPosition: Vector2(0, canvasSize.y - 0),
         iTipo: EmberPlayerBody.PLAYER_2,
         tamano: Vector2(50, 100));
-
+    _player2.onBeginContact = colisionesJuego;
     world.add(_player1);
     world.add(_player2);
   }
@@ -80,5 +84,13 @@ class UghGame extends Forge2DGame
   @override
   Color backgroundColor() {
     return const Color.fromRGBO(255, 255, 0, 1.0);
+  }
+
+  void colisionesJuego(Object objeto1, Object objeto2) {
+    if (objeto1 is EmberPlayerBody && objeto2 is GotaBody) {
+      objeto1.removed;
+    } else if (objeto1 is EmberPlayerBody && objeto2 is GotaBody) {
+      objeto2.removed;
+    }
   }
 }

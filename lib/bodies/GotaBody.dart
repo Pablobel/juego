@@ -19,12 +19,12 @@ class GotaBody extends BodyComponent with CollisionCallbacks {
   @override
   Body createBody() {
     BodyDef bodyDef =
-        BodyDef(type: BodyType.dynamic, position: posicionInicial);
+        BodyDef(type: BodyType.static, position: posicionInicial);
     Body cuerpo = world.createBody(bodyDef);
     CircleShape shape = CircleShape();
     shape.radius = tamano.x / 2;
     FixtureDef fixtureDef = FixtureDef(shape,
-        density: 0.5, friction: 0.2, restitution: 0.2, userData: this);
+        density: 0, friction: 0, restitution: 0, userData: this);
     //debugMode = true;
     cuerpo..createFixture(fixtureDef);
     return cuerpo;
@@ -32,7 +32,7 @@ class GotaBody extends BodyComponent with CollisionCallbacks {
 
   @override
   Future<void> onLoad() async {
-    // TODO: implement onLoad
+
     await super.onLoad();
 
     Gota gota = Gota(position: Vector2.zero(), size: tamano);
