@@ -18,7 +18,7 @@ class EmberPlayer extends SpriteAnimationComponent
 
 
   late int iTipo = -1;
-  final _collisionStartColor = Colors.black87;
+
   final _defaultColor = Colors.red;
   late ShapeHitbox hitbox;
 

@@ -71,7 +71,7 @@ class UghGame extends Forge2DGame
         initialPosition: Vector2(150, canvasSize.y - 600),
         iTipo: EmberPlayerBody.PLAYER_1,
         tamano: Vector2(50, 100));
-    _player1.onBeginContact;
+    _player1.onBeginContact = colisionesJuego;
     _player2 = EmberPlayerBody(
         initialPosition: Vector2(0, canvasSize.y - 0),
         iTipo: EmberPlayerBody.PLAYER_2,
@@ -87,10 +87,10 @@ class UghGame extends Forge2DGame
   }
 
   void colisionesJuego(Object objeto1, Object objeto2) {
-    if (objeto1 is EmberPlayerBody && objeto2 is GotaBody) {
+    if (objeto1 is GotaBody) {
       objeto1.removed;
-    } else if (objeto1 is EmberPlayerBody && objeto2 is GotaBody) {
-      objeto2.removed;
+    } else if (objeto1 is EstrellaBody) {
+      objeto1.removeFromParent();
     }
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
@@ -62,9 +61,9 @@ class EmberPlayerBody extends BodyComponent
 
   @override
   Future<void> onLoad() {
-    EmberPlayer player =
+    emberPlayer =
         EmberPlayer(position: Vector2(0, 0), iTipo: iTipo, size: tamano);
-    add(player);
+    add(emberPlayer);
     return super.onLoad();
   }
 
@@ -190,15 +189,16 @@ class EmberPlayerBody extends BodyComponent
   @override
   Body createBody() {
     BodyDef definicionCuerpo = BodyDef(
-        position: initialPosition, type: BodyType.dynamic, fixedRotation: true,userData: this);
+        position: initialPosition,
+        type: BodyType.dynamic,
+        fixedRotation: true,
+        userData: this);
     Body cuerpo = world.createBody(definicionCuerpo);
 
     final shape = CircleShape();
     shape.radius = tamano.x / 2;
-    FixtureDef fixtureDef = FixtureDef(
-      shape,density: 0.5,friction:0.2,
-      restitution: 0.2,userData: this
-    );
+    FixtureDef fixtureDef = FixtureDef(shape,
+        density: 0.5, friction: 0.2, restitution: 0.2, userData: this);
     //debugMode = true;
     cuerpo..createFixture(fixtureDef);
     return cuerpo;
@@ -210,7 +210,7 @@ class EmberPlayerBody extends BodyComponent
     velocidad.y = verticalDirection * aceleracion;
     Vector2 impulse = Vector2(
         horizontalDirection * aceleracion, verticalDirection * aceleracion);
-    body.applyLinearImpulse(impulse * dt*1000);
+    body.applyLinearImpulse(impulse * dt * 1000);
     super.update(dt);
   }
 }
