@@ -21,7 +21,7 @@ class UghGame extends Forge2DGame
   late EmberPlayerBody _player1, _player2;
   late TiledComponent mapComponent;
 
-  UghGame() : super(gravity: Vector2(0, 15));
+  UghGame() : super(gravity: Vector2(0, 1500));
 
   @override
   Future<void> onLoad() async {
@@ -31,7 +31,8 @@ class UghGame extends Forge2DGame
       'heart.png',
       'star.png',
       'water_enemy.png',
-      'tilemap1_32.png'
+      'tilemap1_32.png',
+      'megaman.png'
     ]);
 
     cameraComponent = CameraComponent(world: world);
@@ -47,7 +48,7 @@ class UghGame extends Forge2DGame
     for (final estrella in estrellas!.objects) {
       EstrellaBody estrellaBody = EstrellaBody(
           posicionInicial: Vector2(estrella.x, estrella.y),
-          tamano: Vector2(25, 25));
+          tamano: Vector2(5, 5));
       add(estrellaBody);
     }
 
@@ -73,7 +74,7 @@ class UghGame extends Forge2DGame
         tamano: Vector2(50, 100));
     _player1.onBeginContact = colisionesJuego;
     _player2 = EmberPlayerBody(
-        initialPosition: Vector2(0, canvasSize.y - 0),
+        initialPosition: Vector2(50, canvasSize.y - 50),
         iTipo: EmberPlayerBody.PLAYER_2,
         tamano: Vector2(50, 100));
     _player2.onBeginContact = colisionesJuego;
@@ -88,9 +89,13 @@ class UghGame extends Forge2DGame
 
   void colisionesJuego(Object objeto1, Object objeto2) {
     if (objeto1 is GotaBody) {
-      objeto1.removed;
+      if(objeto1==_player1){_player1.removeFromParent();}
+      else if(objeto1==_player2){_player2.removeFromParent();}
     } else if (objeto1 is EstrellaBody) {
       objeto1.removeFromParent();
+    }else if(objeto1 is TierraBody){
+      _player1.saltando=false;
+      _player2.saltando=false;
     }
   }
 }

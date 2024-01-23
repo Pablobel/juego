@@ -34,7 +34,7 @@ class TierraBody extends BodyComponent {
       }
       Point point0 = tiledBody.polygon[0];
       shape.vertices.add(Vector2(point0.x, point0.y));
-      fixtureDef = FixtureDef(shape);
+      fixtureDef = FixtureDef(shape,userData: this);
     }
     BodyDef definicionCuerpo = BodyDef(
         position: Vector2(tiledBody.x, tiledBody.y), type: BodyType.static);

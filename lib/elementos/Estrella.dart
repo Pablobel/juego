@@ -12,7 +12,7 @@ class Estrella extends SpriteComponent
   late ShapeHitbox hitbox;
 
   Estrella({
-    required super.position,
+    required super.position
   });
 
   @override
