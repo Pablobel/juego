@@ -40,7 +40,7 @@ class UghGame extends Forge2DGame
     addAll([cameraComponent, world]);
 
     mapComponent = await TiledComponent.load('mapa1.tmx', Vector2.all(32));
-    world.add(mapComponent);
+    add(mapComponent);
 
     ObjectGroup? estrellas =
         mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
@@ -69,17 +69,17 @@ class UghGame extends Forge2DGame
     }
 
     _player1 = EmberPlayerBody(
-        initialPosition: Vector2(150, canvasSize.y - 600),
+        initialPosition: Vector2(150, canvasSize.y - 50),
         iTipo: EmberPlayerBody.PLAYER_1,
         tamano: Vector2(50, 100));
     _player1.onBeginContact = colisionesJuego;
     _player2 = EmberPlayerBody(
-        initialPosition: Vector2(50, canvasSize.y - 50),
+        initialPosition: Vector2(50, canvasSize.y - 51),
         iTipo: EmberPlayerBody.PLAYER_2,
         tamano: Vector2(50, 100));
     _player2.onBeginContact = colisionesJuego;
-    world.add(_player1);
-    world.add(_player2);
+    add(_player1);
+    add(_player2);
   }
 
   @override

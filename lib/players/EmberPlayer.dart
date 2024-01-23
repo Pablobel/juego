@@ -33,7 +33,7 @@ class EmberPlayer extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         amount: 4,
         amountPerRow: 2,
-        textureSize: Vector2(153.6,162.5),
+        textureSize: Vector2(132,139.5),
         stepTime: 0.12,
       ),
     );

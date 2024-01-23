@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="65">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="82">
  <tileset firstgid="1" source="tilemap1_32.tsx"/>
  <layer id="1" name="suelos" width="50" height="40">
   <data encoding="csv">
@@ -56,6 +56,53 @@
   <object id="63" x="386" y="694" width="186" height="40"/>
   <object id="64" x="194" y="598" width="220" height="38"/>
  </objectgroup>
- <objectgroup id="3" name="estrellas"/>
- <objectgroup id="4" name="gotas"/>
+ <objectgroup id="3" name="estrellas">
+  <object id="68" x="889.952" y="853.589">
+   <ellipse/>
+  </object>
+  <object id="69" x="1228.71" y="451.675">
+   <ellipse/>
+  </object>
+  <object id="70" x="955.024" y="361.722">
+   <ellipse/>
+  </object>
+  <object id="71" x="817.225" y="361.722">
+   <ellipse/>
+  </object>
+  <object id="72" x="577.99" y="453.589">
+   <ellipse/>
+  </object>
+  <object id="73" x="321.531" y="549.282" width="1.91388" height="1.91388">
+   <ellipse/>
+  </object>
+  <object id="74" x="486.124" y="658.373">
+   <ellipse/>
+  </object>
+  <object id="75" x="1121.53" y="664.115">
+   <ellipse/>
+  </object>
+  <object id="76" x="1280.38" y="759.809" width="3.82775">
+   <ellipse/>
+  </object>
+  <object id="77" x="306.22" y="769.378">
+   <ellipse/>
+  </object>
+  <object id="78" x="369.378" y="560.766" height="1.91388">
+   <ellipse/>
+  </object>
+  <object id="79" x="248.804" y="560.766">
+   <ellipse/>
+  </object>
+  <object id="80" x="1096.65" y="493.78" width="3.82775">
+   <ellipse/>
+  </object>
+  <object id="81" x="1389.47" y="501.435" width="3.82775">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="gotas">
+  <object id="65" x="700.478" y="882.297">
+   <point/>
+  </object>
+ </objectgroup>
 </map>

@@ -9,7 +9,7 @@ class TierraBody extends BodyComponent {
 
   @override
   Future<void> onLoad() {
-    renderBody = true;
+    renderBody = false;
     return super.onLoad();
   }
 
