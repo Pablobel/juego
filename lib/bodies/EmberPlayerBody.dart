@@ -218,9 +218,18 @@ class EmberPlayerBody extends BodyComponent
       } else {
         verticalDirection = 0;
       }
+    } else if (keysPressed.containsAll(izquierdaSalto1) &&
+        iTipo == EmberPlayerBody.PLAYER_1) {
+      if (true) {
+        horizontalDirection = -1000;
+        verticalDirection = -1000;
+      } else {
+        verticalDirection = 0;
+      }
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = 1;
+      verticalDirection=0;
       if (!mirandoDerecha1) {
         emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = true;
@@ -228,6 +237,7 @@ class EmberPlayerBody extends BodyComponent
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = -1;
+      verticalDirection=0;
       if (mirandoDerecha1) {
         emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = false;
@@ -254,10 +264,10 @@ class EmberPlayerBody extends BodyComponent
         verticalDirection = 0;
       }
     } else if (keysPressed.contains(LogicalKeyboardKey.keyL)) {
-      if(world.gravity==Vector2(0,1000)) {
+      if (world.gravity == Vector2(0, 1000)) {
         world.gravity = Vector2(0, 0);
-      }else{
-        world.gravity=Vector2(0,1000);
+      } else {
+        world.gravity = Vector2(0, 1000);
       }
     } else {
       horizontalDirection = 0;
