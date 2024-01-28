@@ -117,6 +117,7 @@ class UghGame extends Forge2DGame
     )..anchor = Anchor.center
       ..position = size / 2;  // Centrar en la pantalla
     add(gameOverText);
+
   }
 
   void cargarVidasPlayer1(int vidasRestantes) {
