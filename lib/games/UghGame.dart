@@ -1,3 +1,4 @@
+import 'dart:js';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
@@ -5,6 +6,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/material.dart';
 import 'package:juego/bodies/EmberPlayerBody.dart';
 import 'package:juego/bodies/EstrellaBody.dart';
 import 'package:juego/bodies/GotaBody.dart';
@@ -104,7 +106,17 @@ class UghGame extends Forge2DGame
     print(_player1.vidas);
     if (_player1.vidas == 0) {
       _player1.removeFromParent();
+      mostrarGameOver();
     }
+  }
+
+  void mostrarGameOver() {
+    var gameOverText = TextComponent(
+      text: 'Game Over',
+      textRenderer: TextPaint(style: TextStyle(fontSize: 200, color: Colors.red)),
+    )..anchor = Anchor.center
+      ..position = size / 2;  // Centrar en la pantalla
+    add(gameOverText);
   }
 
   void cargarVidasPlayer1(int vidasRestantes) {
