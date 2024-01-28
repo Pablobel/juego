@@ -7,6 +7,7 @@ import '../players/EmberPlayer.dart';
 
 class EmberPlayerBody extends BodyComponent
     with KeyboardHandler, ContactCallbacks {
+  int vidas = 3;
   bool saltando = false;
   bool mirandoDerecha1 = true;
   bool mirandoDerecha2 = true;
@@ -208,17 +209,16 @@ class EmberPlayerBody extends BodyComponent
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    if(keysPressed.containsAll(derechaSalto1)&&
-        iTipo == EmberPlayerBody.PLAYER_1){
+    if (keysPressed.containsAll(derechaSalto1) &&
+        iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = 1;
-      if(!saltando) {
+      if (true) {
+        horizontalDirection = 1000;
         verticalDirection = -1000;
-        saltando = true;
-      }else {
+      } else {
         verticalDirection = 0;
       }
-    }else
-    if (keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
+    } else if (keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = 1;
       if (!mirandoDerecha1) {
@@ -246,11 +246,11 @@ class EmberPlayerBody extends BodyComponent
         emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha2 = false;
       }
-    }else if (keysPressed.contains(LogicalKeyboardKey.space)) {
-      if(!saltando) {
-          verticalDirection = -1000;
-          saltando = true;
-      }else {
+    } else if (keysPressed.contains(LogicalKeyboardKey.space)) {
+      if (true) {
+        verticalDirection = -1000;
+        saltando = true;
+      } else {
         verticalDirection = 0;
       }
     } else {

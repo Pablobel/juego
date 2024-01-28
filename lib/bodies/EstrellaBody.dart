@@ -22,7 +22,7 @@ class EstrellaBody extends BodyComponent with CollisionCallbacks {
     FixtureDef fixtureDef = FixtureDef(shape,
         density: 0, friction: 0, restitution: 0, userData: this);
     //debugMode = true;
-    cuerpo..createFixture(fixtureDef);
+    cuerpo.createFixture(fixtureDef);
     return cuerpo;
   }
 
