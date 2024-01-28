@@ -23,6 +23,7 @@ class UghGame extends Forge2DGame
   late final CameraComponent cameraComponent;
   late EmberPlayerBody _player1, _player2;
   late TiledComponent mapComponent;
+  List<dynamic> vidas = [];
 
   UghGame() : super(gravity: Vector2(0, 1000));
 
@@ -71,8 +72,7 @@ class UghGame extends Forge2DGame
       add(tierraBody);
     }
 
-    cargarVidasPlayer1(3);
-
+    cargarVidasPlayer1(5);
 
     _player1 = EmberPlayerBody(
         initialPosition: Vector2(150, canvasSize.y - 50),
@@ -95,30 +95,46 @@ class UghGame extends Forge2DGame
 
   void colisionesJuego(Object objeto1, Object objeto2) {
     if (objeto1 is GotaBody) {
-      _player1.vidas-=1;
+      _player1.vidas -= 1;
       cargarVidasPlayer1(_player1.vidas);
-      _player1.horizontalDirection=-1000;
+      _player1.horizontalDirection = -1000;
     } else if (objeto1 is EstrellaBody) {
       objeto1.removeFromParent();
     }
     print(_player1.vidas);
-    if(_player1.vidas==0){
+    if (_player1.vidas == 0) {
       _player1.removeFromParent();
     }
   }
 
-  void cargarVidasPlayer1(int vidasRestantes){
-
-    double posicionX=10;
-    for(int i=0;i< vidasRestantes;i++){
-      Vidas vidasPlayer1=Vidas(position: Vector2(posicionX,10),size: Vector2(25, 25 ));
-      add(vidasPlayer1);
-      posicionX+=30;
+  void cargarVidasPlayer1(int vidasRestantes) {
+    if (!vidas.isEmpty) {
+      for (Object i in vidas) {
+        if (i is Vidas) {
+          i.removeFromParent();
+        }
+        if (i is VidasVacias) {
+          i.removeFromParent();
+        }
+      }
+      vidas.clear();
     }
-    for(int i=vidasRestantes;i<5;i++){
-      VidasVacias vidasPlayer11=VidasVacias(position: Vector2(posicionX,10),size: Vector2(25, 25 ));
-      add(vidasPlayer11);
-      posicionX+=30;
+    Vidas vidasLlenasPlayer1;
+    VidasVacias vidasVaciasPlayer1;
+    double posicionX = 10;
+    for (int i = 0; i < vidasRestantes; i++) {
+      vidasLlenasPlayer1 =
+          Vidas(position: Vector2(posicionX, 10), size: Vector2(25, 25));
+      add(vidasLlenasPlayer1);
+      posicionX += 30;
+      vidas.add(vidasLlenasPlayer1);
+    }
+    for (int i = vidasRestantes; i < 5; i++) {
+      vidasVaciasPlayer1 =
+          VidasVacias(position: Vector2(posicionX, 10), size: Vector2(25, 25));
+      add(vidasVaciasPlayer1);
+      posicionX += 30;
+      vidas.add(vidasVaciasPlayer1);
     }
   }
 }

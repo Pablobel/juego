@@ -7,7 +7,7 @@ import '../players/EmberPlayer.dart';
 
 class EmberPlayerBody extends BodyComponent
     with KeyboardHandler, ContactCallbacks {
-  int vidas = 3;
+  int vidas = 5;
   bool saltando = false;
   bool mirandoDerecha1 = true;
   bool mirandoDerecha2 = true;
