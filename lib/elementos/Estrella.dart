@@ -12,13 +12,13 @@ class Estrella extends SpriteComponent
   late ShapeHitbox hitbox;
 
   Estrella({
-    required super.position
-  });
+    required super.position,required super.size
+  }): super(anchor: Anchor.center);
 
   @override
   Future<void> onLoad() async {
     sprite = Sprite(game.images.fromCache('star.png'));
-    anchor = Anchor.center;
+    //anchor = Anchor.center;
     final defaultPaint = Paint()
       ..color = _defaultColor
       ..style = PaintingStyle.stroke;

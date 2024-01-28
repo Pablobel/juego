@@ -21,7 +21,24 @@ class EmberPlayerBody extends BodyComponent
   static const int PLAYER_2 = 1;
   final double aceleracion = 1000;
   late EmberPlayer emberPlayer;
-  final diagonalNE = <LogicalKeyboardKey>{
+  final derechaSalto1 = <LogicalKeyboardKey>{
+    LogicalKeyboardKey.arrowRight,
+    LogicalKeyboardKey.space
+  };
+  final izquierdaSalto1 = <LogicalKeyboardKey>{
+    LogicalKeyboardKey.arrowLeft,
+    LogicalKeyboardKey.space
+  };
+  final derechaSalto2 = <LogicalKeyboardKey>{
+    LogicalKeyboardKey.keyD,
+    LogicalKeyboardKey.space
+  };
+  final izquierdaSalto2 = <LogicalKeyboardKey>{
+    LogicalKeyboardKey.keyA,
+    LogicalKeyboardKey.space
+  };
+
+  /*final diagonalNE = <LogicalKeyboardKey>{
     LogicalKeyboardKey.arrowUp,
     LogicalKeyboardKey.arrowRight
   };
@@ -52,7 +69,7 @@ class EmberPlayerBody extends BodyComponent
   final diagonalNO2 = <LogicalKeyboardKey>{
     LogicalKeyboardKey.keyW,
     LogicalKeyboardKey.keyA
-  };
+  };*/
 
   EmberPlayerBody(
       {required this.initialPosition,
@@ -68,7 +85,7 @@ class EmberPlayerBody extends BodyComponent
     return super.onLoad();
   }
 
-  @override
+  /*@override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     //print("TECLA:" + event.data.logicalKey.keyId.toString());
     //horizontalDirection = 0;
@@ -187,6 +204,60 @@ class EmberPlayerBody extends BodyComponent
       verticalDirection = 0;
     }
     return super.onKeyEvent(event, keysPressed);
+  }*/
+
+  @override
+  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    if(keysPressed.containsAll(derechaSalto1)&&
+        iTipo == EmberPlayerBody.PLAYER_1){
+      horizontalDirection = 1;
+      if(!saltando) {
+        verticalDirection = -1000;
+        saltando = true;
+      }else {
+        verticalDirection = 0;
+      }
+    }else
+    if (keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
+        iTipo == EmberPlayerBody.PLAYER_1) {
+      horizontalDirection = 1;
+      if (!mirandoDerecha1) {
+        emberPlayer.flipHorizontallyAroundCenter();
+        mirandoDerecha1 = true;
+      }
+    } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft) &&
+        iTipo == EmberPlayerBody.PLAYER_1) {
+      horizontalDirection = -1;
+      if (mirandoDerecha1) {
+        emberPlayer.flipHorizontallyAroundCenter();
+        mirandoDerecha1 = false;
+      }
+    } else if (keysPressed.contains(LogicalKeyboardKey.keyD) &&
+        iTipo == EmberPlayerBody.PLAYER_2) {
+      horizontalDirection = 1;
+      if (!mirandoDerecha2) {
+        emberPlayer.flipHorizontallyAroundCenter();
+        mirandoDerecha2 = true;
+      }
+    } else if (keysPressed.contains(LogicalKeyboardKey.keyA) &&
+        iTipo == EmberPlayerBody.PLAYER_2) {
+      horizontalDirection = -1;
+      if (mirandoDerecha2) {
+        emberPlayer.flipHorizontallyAroundCenter();
+        mirandoDerecha2 = false;
+      }
+    }else if (keysPressed.contains(LogicalKeyboardKey.space)) {
+      if(!saltando) {
+          verticalDirection = -1000;
+          saltando = true;
+      }else {
+        verticalDirection = 0;
+      }
+    } else {
+      horizontalDirection = 0;
+      verticalDirection = 0;
+    }
+    return super.onKeyEvent(event, keysPressed);
   }
 
   @override
@@ -201,7 +272,7 @@ class EmberPlayerBody extends BodyComponent
     final shape = CircleShape();
     shape.radius = tamano.x / 2;
     FixtureDef fixtureDef = FixtureDef(shape,
-        density: 1.5, friction: 0.5, restitution: 0, userData: this);
+        density: 0.5, friction: 1, restitution: 0, userData: this);
     //debugMode = true;
     cuerpo..createFixture(fixtureDef);
     return cuerpo;

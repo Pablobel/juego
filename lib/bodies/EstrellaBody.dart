@@ -18,7 +18,7 @@ class EstrellaBody extends BodyComponent with CollisionCallbacks {
     BodyDef bodyDef = BodyDef(type: BodyType.static, position: posicionInicial);
     Body cuerpo = world.createBody(bodyDef);
     CircleShape shape = CircleShape();
-    shape.radius = tamano.x / 2;
+    shape.radius = tamano.x/2;
     FixtureDef fixtureDef = FixtureDef(shape,
         density: 0, friction: 0, restitution: 0, userData: this);
     //debugMode = true;
@@ -30,7 +30,7 @@ class EstrellaBody extends BodyComponent with CollisionCallbacks {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    Estrella estrella = Estrella(position: Vector2.zero());
+    Estrella estrella = Estrella(position: Vector2.zero(),size: tamano);
     add(estrella);
   }
 }
