@@ -25,7 +25,8 @@ class UghGame extends Forge2DGame
   late final CameraComponent cameraComponent;
   late EmberPlayerBody _player1, _player2;
   late TiledComponent mapComponent;
-  List<dynamic> vidas = [];
+  List<dynamic> vidas1 = [];
+  List<dynamic> vidas2 = [];
 
   UghGame() : super(gravity: Vector2(0, 1000));
 
@@ -63,7 +64,6 @@ class UghGame extends Forge2DGame
     for (final gota in gotas!.objects) {
       GotaBody gotaBody = GotaBody(
           posicionInicial: Vector2(gota.x, gota.y), tamano: Vector2(25, 25));
-
       add(gotaBody);
     }
 
@@ -75,19 +75,20 @@ class UghGame extends Forge2DGame
     }
 
     cargarVidasPlayer1(5);
+    cargarVidasPlayer2(5);
 
     _player1 = EmberPlayerBody(
-        initialPosition: Vector2(150, canvasSize.y - 50),
+        initialPosition: Vector2(100, canvasSize.y - 50),
         iTipo: EmberPlayerBody.PLAYER_1,
         tamano: Vector2(50, 100));
-    _player1.onBeginContact = colisionesJuego;
-    /*_player2 = EmberPlayerBody(
-        initialPosition: Vector2(50, canvasSize.y - 51),
+    _player1.onBeginContact = colisionesPlayer1;
+    _player2 = EmberPlayerBody(
+        initialPosition: Vector2(1500, canvasSize.y - 51),
         iTipo: EmberPlayerBody.PLAYER_2,
         tamano: Vector2(50, 100));
-    _player2.onBeginContact = colisionesJuego;
-    add(_player1);*/
+    _player2.onBeginContact = colisionesPlayer2;
     add(_player1);
+    add(_player2);
   }
 
   @override
@@ -95,34 +96,67 @@ class UghGame extends Forge2DGame
     return const Color.fromRGBO(255, 255, 0, 1.0);
   }
 
-  void colisionesJuego(Object objeto1, Object objeto2) {
+  void colisionesPlayer1(Object objeto1, Object objeto2) {
     if (objeto1 is GotaBody) {
-      _player1.vidas -= 1;
-      cargarVidasPlayer1(_player1.vidas);
-      _player1.horizontalDirection = -1000;
+
+        _player1.vidas -= 1;
+        cargarVidasPlayer1(_player1.vidas);
+        if(_player1.position.x<objeto1.position.x){
+          _player1.horizontalDirection = -1;
+        }else{
+          _player1.horizontalDirection = 1;
+        }
+
     } else if (objeto1 is EstrellaBody) {
       objeto1.removeFromParent();
     }
     print(_player1.vidas);
     if (_player1.vidas == 0) {
       _player1.removeFromParent();
+      if (_player2.vidas==0){
+        mostrarGameOver();
+      }
+    }
+  }
+
+  void colisionesPlayer2(Object objeto1, Object objeto2) {
+    if (objeto1 is GotaBody) {
+
+      _player2.vidas -= 1;
+      cargarVidasPlayer2(_player2.vidas);
+      if(_player2.position.x<objeto1.position.x){
+        _player2.horizontalDirection = -1;
+      }else{
+        _player2.horizontalDirection = 1;
+      }
+
+    } else if (objeto1 is EstrellaBody) {
+      objeto1.removeFromParent();
+    }
+
+    print(_player2.vidas);
+    if (_player2.vidas == 0) {
+      _player2.removeFromParent();
+      if (_player1.vidas==0){
       mostrarGameOver();
+      }
     }
   }
 
   void mostrarGameOver() {
     var gameOverText = TextComponent(
       text: 'Game Over',
-      textRenderer: TextPaint(style: TextStyle(fontSize: 200, color: Colors.red)),
-    )..anchor = Anchor.center
-      ..position = size / 2;  // Centrar en la pantalla
+      textRenderer:
+          TextPaint(style: TextStyle(fontSize: 200, color: Colors.red)),
+    )
+      ..anchor = Anchor.center
+      ..position = size / 2; // Centrar en la pantalla
     add(gameOverText);
-
   }
 
   void cargarVidasPlayer1(int vidasRestantes) {
-    if (!vidas.isEmpty) {
-      for (Object i in vidas) {
+    if (!vidas1.isEmpty) {
+      for (Object i in vidas1) {
         if (i is Vidas) {
           i.removeFromParent();
         }
@@ -130,7 +164,7 @@ class UghGame extends Forge2DGame
           i.removeFromParent();
         }
       }
-      vidas.clear();
+      vidas1.clear();
     }
     Vidas vidasLlenasPlayer1;
     VidasVacias vidasVaciasPlayer1;
@@ -140,14 +174,45 @@ class UghGame extends Forge2DGame
           Vidas(position: Vector2(posicionX, 10), size: Vector2(25, 25));
       add(vidasLlenasPlayer1);
       posicionX += 30;
-      vidas.add(vidasLlenasPlayer1);
+      vidas1.add(vidasLlenasPlayer1);
     }
     for (int i = vidasRestantes; i < 5; i++) {
       vidasVaciasPlayer1 =
           VidasVacias(position: Vector2(posicionX, 10), size: Vector2(25, 25));
       add(vidasVaciasPlayer1);
       posicionX += 30;
-      vidas.add(vidasVaciasPlayer1);
+      vidas1.add(vidasVaciasPlayer1);
+    }
+  }
+
+  void cargarVidasPlayer2(int vidasRestantes) {
+    if (!vidas2.isEmpty) {
+      for (Object i in vidas2) {
+        if (i is Vidas) {
+          i.removeFromParent();
+        }
+        if (i is VidasVacias) {
+          i.removeFromParent();
+        }
+      }
+      vidas2.clear();
+    }
+    Vidas vidasLlenasPlayer2;
+    VidasVacias vidasVaciasPlayer2;
+    double posicionX = 1500;
+    for (int i = 0; i < vidasRestantes; i++) {
+      vidasLlenasPlayer2 =
+          Vidas(position: Vector2(posicionX, 10), size: Vector2(25, 25));
+      add(vidasLlenasPlayer2);
+      posicionX += 30;
+      vidas2.add(vidasLlenasPlayer2);
+    }
+    for (int i = vidasRestantes; i < 5; i++) {
+      vidasVaciasPlayer2 =
+          VidasVacias(position: Vector2(posicionX, 10), size: Vector2(25, 25));
+      add(vidasVaciasPlayer2);
+      posicionX += 30;
+      vidas2.add(vidasVaciasPlayer2);
     }
   }
 }
