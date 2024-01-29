@@ -1,14 +1,14 @@
-import 'dart:html';
-
+/*import 'dart:html';
 import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
 import 'package:flame_forge2d/body_component.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
+import '../elementos/Estrella.dart';
+import '../elementos/Gota.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
+import 'package:flutter/services.dart';*/
+import 'package:flame/components.dart';
 import 'package:juego/games/UghGame.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 
 import '../elementos/Estrella.dart';
 import '../elementos/Gota.dart';
@@ -19,8 +19,8 @@ class EmberPlayer2 extends SpriteAnimationComponent
 
   late int iTipo = -1;
 
-  final _defaultColor = Colors.red;
-  late ShapeHitbox hitbox;
+  /*final _defaultColor = Colors.red;
+  late ShapeHitbox hitbox;*/
 
   EmberPlayer2(
       {required super.position, required this.iTipo, required super.size})
@@ -38,14 +38,14 @@ class EmberPlayer2 extends SpriteAnimationComponent
       ),
     );
 
-    final defaultPaint = Paint()
+    /*final defaultPaint = Paint()
       ..color = _defaultColor
       ..style = PaintingStyle.stroke;
 
     hitbox = RectangleHitbox();
     hitbox.paint = defaultPaint;
     hitbox.isSolid = true;
-    add(hitbox);
+    add(hitbox);*/
   }
 
 }

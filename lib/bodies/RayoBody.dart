@@ -14,8 +14,10 @@ class RayoBody extends BodyComponent with CollisionCallbacks {
   Body createBody() {
     BodyDef bodyDef = BodyDef(type: BodyType.static, position: posicionInicial);
     Body cuerpo = world.createBody(bodyDef);
-    CircleShape shape = CircleShape();
-    shape.radius = tamano.x / 2;
+
+    PolygonShape shape = PolygonShape();
+    shape.setAsBox(tamano.x / 4, tamano.y / 2, Vector2.zero(), 0);
+
     FixtureDef fixtureDef = FixtureDef(shape,
         density: 0, friction: 0, restitution: 0, userData: this);
     //debugMode = true;
@@ -29,5 +31,6 @@ class RayoBody extends BodyComponent with CollisionCallbacks {
 
     Rayo rayo = Rayo(position: Vector2.zero(), size: tamano);
     add(rayo);
+    renderBody = false;
   }
 }

@@ -35,6 +35,7 @@ class GotaBody extends BodyComponent with CollisionCallbacks {
 
     Gota gota = Gota(position: Vector2.zero(), size: tamano);
     add(gota);
+    renderBody = false;
   }
 
   @override

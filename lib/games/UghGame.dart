@@ -16,6 +16,7 @@ import 'package:juego/elementos/Gota.dart';
 import 'package:juego/players/EmberPlayer.dart';
 import '../bodies/PuertaBody.dart';
 import '../bodies/RayoBody.dart';
+import '../elementos/Fondo.dart';
 import '../elementos/Puerta.dart';
 import '../elementos/Vidas.dart';
 import '../elementos/VidasVacias.dart';
@@ -45,8 +46,12 @@ class UghGame extends Forge2DGame
       'megaman.png',
       'megamanrojo.png',
       'puerta.png',
-      'rayo.png'
+      'rayo.png',
+      'universo.png'
     ]);
+
+    final background = Fondo();
+    add(background);
 
     cameraComponent = CameraComponent(world: world);
     cameraComponent.viewfinder.anchor = Anchor.topLeft;
@@ -109,10 +114,10 @@ class UghGame extends Forge2DGame
     add(_player2);
   }
 
-  @override
+  /*@override
   Color backgroundColor() {
     return const Color.fromRGBO(255, 255, 0, 1.0);
-  }
+  }*/
 
   void colisionesPlayer1(Object objeto1, Object objeto2) {
     if (objeto1 is GotaBody) {
@@ -155,6 +160,7 @@ class UghGame extends Forge2DGame
       }
     } else if (objeto1 is EstrellaBody) {
       objeto1.removeFromParent();
+      estrellasConseguidas += 1;
     } else if (objeto1 is RayoBody) {
       _player2.vidas = 0;
     } else if (objeto1 is PuertaBody) {
@@ -167,8 +173,10 @@ class UghGame extends Forge2DGame
         mostrarGameOver();
       }
     }
-    rayoBody1.removeFromParent();
-    rayoBody2.removeFromParent();
+    if (estrellasConseguidas == 10) {
+      rayoBody1.removeFromParent();
+      rayoBody2.removeFromParent();
+    }
   }
 
   void mostrarGameOver() {

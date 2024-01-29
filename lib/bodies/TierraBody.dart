@@ -29,7 +29,7 @@ class TierraBody extends BodyComponent with CollisionCallbacks {
       fixtureDef = FixtureDef(shape);
     } else if (tiledBody.isPolygon) {
       ChainShape shape = ChainShape();
-      //List<Vector2> vertices = [];
+      List<Vector2> vertices = [];
       for (final point in tiledBody.polygon) {
         shape.vertices.add(Vector2(point.x, point.y));
       }

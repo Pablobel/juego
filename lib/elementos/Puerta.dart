@@ -1,15 +1,15 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 
 import 'package:juego/games/UghGame.dart';
 
 class Puerta extends SpriteComponent
     with HasGameRef<UghGame>, CollisionCallbacks {
 
-  final _collisionStartColor = Colors.black87;
+  /*final _collisionStartColor = Colors.black87;
   final _defaultColor = Colors.red;
-  late ShapeHitbox hitbox;
+  late ShapeHitbox hitbox;*/
 
   Puerta({
     required super.position,required super.size
@@ -18,7 +18,7 @@ class Puerta extends SpriteComponent
   @override
   Future<void> onLoad() async {
     sprite = Sprite(game.images.fromCache('puerta.png'));
-    //anchor = Anchor.center;
+    /*anchor = Anchor.center;
     final defaultPaint = Paint()
       ..color = _defaultColor
       ..style = PaintingStyle.stroke;
@@ -27,7 +27,7 @@ class Puerta extends SpriteComponent
     hitbox.paint=defaultPaint;
     hitbox.isSolid=true;
     add(hitbox);
-    return super.onLoad();
+    return super.onLoad();*/
 
 
   }

@@ -91,6 +91,7 @@ class EmberPlayerBody extends BodyComponent
           EmberPlayer2(position: Vector2(-10, -10), iTipo: iTipo, size: tamano);
       add(emberPlayer2);
     }
+    renderBody = false;
     return super.onLoad();
   }
 

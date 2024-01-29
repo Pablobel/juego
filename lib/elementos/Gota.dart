@@ -1,6 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 
 import 'package:juego/games/UghGame.dart';
 
@@ -8,9 +8,9 @@ class Gota extends SpriteAnimationComponent
     with HasGameReference<UghGame>, CollisionCallbacks {
 
 
-  final _collisionStartColor = Colors.black87;
+  /*final _collisionStartColor = Colors.black87;
   final _defaultColor = Colors.red;
-  late ShapeHitbox hitbox;
+  late ShapeHitbox hitbox;*/
 
   Gota({required super.position, required super.size})
       : super(anchor: Anchor.center);
@@ -26,14 +26,14 @@ class Gota extends SpriteAnimationComponent
       ),
     );
 
-    final defaultPaint = Paint()
+    /*final defaultPaint = Paint()
       ..color = _defaultColor
       ..style = PaintingStyle.stroke;
 
     hitbox = RectangleHitbox();
     hitbox.paint=defaultPaint;
     hitbox.isSolid=true;
-    add(hitbox);
+    add(hitbox);*/
   }
 
 
