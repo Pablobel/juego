@@ -1,6 +1,5 @@
 import 'dart:js';
 import 'dart:ui';
-
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -15,7 +14,6 @@ import 'dart:async';
 import 'package:juego/elementos/Estrella.dart';
 import 'package:juego/elementos/Gota.dart';
 import 'package:juego/players/EmberPlayer.dart';
-
 import '../elementos/Vidas.dart';
 import '../elementos/VidasVacias.dart';
 
@@ -27,6 +25,7 @@ class UghGame extends Forge2DGame
   late TiledComponent mapComponent;
   List<dynamic> vidas1 = [];
   List<dynamic> vidas2 = [];
+  int estrellasConseguidas = 0;
 
   UghGame() : super(gravity: Vector2(0, 1000));
 
@@ -39,7 +38,8 @@ class UghGame extends Forge2DGame
       'star.png',
       'water_enemy.png',
       'tilemap1_32.png',
-      'megaman.png'
+      'megaman.png',
+      'megamanrojo.png'
     ]);
 
     cameraComponent = CameraComponent(world: world);
@@ -98,22 +98,21 @@ class UghGame extends Forge2DGame
 
   void colisionesPlayer1(Object objeto1, Object objeto2) {
     if (objeto1 is GotaBody) {
-
-        _player1.vidas -= 1;
-        cargarVidasPlayer1(_player1.vidas);
-        if(_player1.position.x<objeto1.position.x){
-          _player1.horizontalDirection = -1;
-        }else{
-          _player1.horizontalDirection = 1;
-        }
-
+      _player1.vidas -= 1;
+      cargarVidasPlayer1(_player1.vidas);
+      if (_player1.position.x < objeto1.position.x) {
+        _player1.horizontalDirection = -1;
+      } else {
+        _player1.horizontalDirection = 1;
+      }
     } else if (objeto1 is EstrellaBody) {
       objeto1.removeFromParent();
+      estrellasConseguidas +=1;
     }
-    print(_player1.vidas);
+
     if (_player1.vidas == 0) {
       _player1.removeFromParent();
-      if (_player2.vidas==0){
+      if (_player2.vidas == 0) {
         mostrarGameOver();
       }
     }
@@ -121,24 +120,21 @@ class UghGame extends Forge2DGame
 
   void colisionesPlayer2(Object objeto1, Object objeto2) {
     if (objeto1 is GotaBody) {
-
       _player2.vidas -= 1;
       cargarVidasPlayer2(_player2.vidas);
-      if(_player2.position.x<objeto1.position.x){
+      if (_player2.position.x < objeto1.position.x) {
         _player2.horizontalDirection = -1;
-      }else{
+      } else {
         _player2.horizontalDirection = 1;
       }
-
     } else if (objeto1 is EstrellaBody) {
       objeto1.removeFromParent();
     }
 
-    print(_player2.vidas);
     if (_player2.vidas == 0) {
       _player2.removeFromParent();
-      if (_player1.vidas==0){
-      mostrarGameOver();
+      if (_player1.vidas == 0) {
+        mostrarGameOver();
       }
     }
   }

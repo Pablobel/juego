@@ -4,6 +4,7 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import '../players/EmberPlayer.dart';
+import '../players/EmberPlayer2.dart';
 
 class EmberPlayerBody extends BodyComponent
     with KeyboardHandler, ContactCallbacks {
@@ -22,6 +23,7 @@ class EmberPlayerBody extends BodyComponent
   static const int PLAYER_2 = 1;
   final double aceleracion = 1000;
   late EmberPlayer emberPlayer;
+  late EmberPlayer2 emberPlayer2;
   final derechaSalto1 = <LogicalKeyboardKey>{
     LogicalKeyboardKey.arrowRight,
     LogicalKeyboardKey.space
@@ -80,9 +82,15 @@ class EmberPlayerBody extends BodyComponent
 
   @override
   Future<void> onLoad() {
-    emberPlayer =
-        EmberPlayer(position: Vector2(0, 0), iTipo: iTipo, size: tamano);
-    add(emberPlayer);
+    if (iTipo == PLAYER_1) {
+      emberPlayer =
+          EmberPlayer(position: Vector2(0, 0), iTipo: iTipo, size: tamano);
+      add(emberPlayer);
+    } else if (iTipo == PLAYER_2) {
+      emberPlayer2 =
+          EmberPlayer2(position: Vector2(0, 0), iTipo: iTipo, size: tamano);
+      add(emberPlayer2);
+    }
     return super.onLoad();
   }
 
@@ -211,7 +219,10 @@ class EmberPlayerBody extends BodyComponent
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     if (keysPressed.containsAll(derechaSalto1) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
-      horizontalDirection = 1;
+      if (!mirandoDerecha1) {
+        emberPlayer.flipHorizontallyAroundCenter();
+        mirandoDerecha1 = true;
+      }
       if (true) {
         horizontalDirection = 1000;
         verticalDirection = -1000;
@@ -220,6 +231,10 @@ class EmberPlayerBody extends BodyComponent
       }
     } else if (keysPressed.containsAll(izquierdaSalto1) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
+      if (mirandoDerecha1) {
+        emberPlayer.flipHorizontallyAroundCenter();
+        mirandoDerecha1 = false;
+      }
       if (true) {
         horizontalDirection = -1000;
         verticalDirection = -1000;
@@ -228,7 +243,10 @@ class EmberPlayerBody extends BodyComponent
       }
     } else if (keysPressed.containsAll(derechaSalto2) &&
         iTipo == EmberPlayerBody.PLAYER_2) {
-      horizontalDirection = 1;
+      if (!mirandoDerecha2) {
+        emberPlayer2.flipHorizontallyAroundCenter();
+        mirandoDerecha2 = true;
+      }
       if (true) {
         horizontalDirection = 1000;
         verticalDirection = -1000;
@@ -237,16 +255,20 @@ class EmberPlayerBody extends BodyComponent
       }
     } else if (keysPressed.containsAll(izquierdaSalto2) &&
         iTipo == EmberPlayerBody.PLAYER_2) {
+      if (mirandoDerecha2) {
+        emberPlayer2.flipHorizontallyAroundCenter();
+        mirandoDerecha2 = false;
+      }
       if (true) {
         horizontalDirection = -1000;
         verticalDirection = -1000;
       } else {
         verticalDirection = 0;
       }
-    } else if(keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
+    } else if (keysPressed.contains(LogicalKeyboardKey.arrowRight) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = 1;
-      verticalDirection=0;
+      verticalDirection = 0;
       if (!mirandoDerecha1) {
         emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = true;
@@ -254,7 +276,7 @@ class EmberPlayerBody extends BodyComponent
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft) &&
         iTipo == EmberPlayerBody.PLAYER_1) {
       horizontalDirection = -1;
-      verticalDirection=0;
+      verticalDirection = 0;
       if (mirandoDerecha1) {
         emberPlayer.flipHorizontallyAroundCenter();
         mirandoDerecha1 = false;
@@ -262,27 +284,29 @@ class EmberPlayerBody extends BodyComponent
     } else if (keysPressed.contains(LogicalKeyboardKey.keyD) &&
         iTipo == EmberPlayerBody.PLAYER_2) {
       horizontalDirection = 1;
-      verticalDirection=0;
+      verticalDirection = 0;
       if (!mirandoDerecha2) {
-        emberPlayer.flipHorizontallyAroundCenter();
+        emberPlayer2.flipHorizontallyAroundCenter();
         mirandoDerecha2 = true;
       }
     } else if (keysPressed.contains(LogicalKeyboardKey.keyA) &&
         iTipo == EmberPlayerBody.PLAYER_2) {
       horizontalDirection = -1;
-      verticalDirection=0;
+      verticalDirection = 0;
       if (mirandoDerecha2) {
-        emberPlayer.flipHorizontallyAroundCenter();
+        emberPlayer2.flipHorizontallyAroundCenter();
         mirandoDerecha2 = false;
       }
-    } else if (keysPressed.contains(LogicalKeyboardKey.space)  && iTipo == EmberPlayerBody.PLAYER_1) {
+    } else if (keysPressed.contains(LogicalKeyboardKey.space) &&
+        iTipo == EmberPlayerBody.PLAYER_1) {
       if (true) {
         verticalDirection = -1000;
         saltando = true;
       } else {
         verticalDirection = 0;
       }
-    } else if (keysPressed.contains(LogicalKeyboardKey.keyT)  && iTipo == EmberPlayerBody.PLAYER_2) {
+    } else if (keysPressed.contains(LogicalKeyboardKey.keyT) &&
+        iTipo == EmberPlayerBody.PLAYER_2) {
       if (true) {
         verticalDirection = -1000;
         saltando = true;
