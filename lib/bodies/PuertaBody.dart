@@ -1,20 +1,14 @@
-import 'dart:html';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:juego/games/UghGame.dart';
+import '../elementos/Puerta.dart';
 
-import '../elementos/Gota.dart';
-
-class GotaBody extends BodyComponent with CollisionCallbacks {
+class PuertaBody extends BodyComponent with CollisionCallbacks {
   Vector2 posicionInicial;
   Vector2 tamano;
-  bool movimientoDerecha = false;
-  int numeroMovimientos = 0;
 
-  GotaBody({required this.posicionInicial, required this.tamano}) : super();
+  PuertaBody({required this.posicionInicial, required this.tamano}) : super();
 
   @override
   Body createBody() {
@@ -33,24 +27,7 @@ class GotaBody extends BodyComponent with CollisionCallbacks {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    Gota gota = Gota(position: Vector2.zero(), size: tamano);
-    add(gota);
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-
-    if (movimientoDerecha) {
-      position.x += 1;
-      numeroMovimientos += 1;
-    } else {
-      position.x -= 1;
-      numeroMovimientos += 1;
-    }
-    if (numeroMovimientos == 200) {
-      numeroMovimientos = 0;
-      movimientoDerecha = !movimientoDerecha;
-    }
+    Puerta puerta = Puerta(position: Vector2.zero(), size: tamano);
+    add(puerta);
   }
 }

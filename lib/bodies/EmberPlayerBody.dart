@@ -84,11 +84,11 @@ class EmberPlayerBody extends BodyComponent
   Future<void> onLoad() {
     if (iTipo == PLAYER_1) {
       emberPlayer =
-          EmberPlayer(position: Vector2(0, 0), iTipo: iTipo, size: tamano);
+          EmberPlayer(position: Vector2(-10, -10), iTipo: iTipo, size: tamano);
       add(emberPlayer);
     } else if (iTipo == PLAYER_2) {
       emberPlayer2 =
-          EmberPlayer2(position: Vector2(0, 0), iTipo: iTipo, size: tamano);
+          EmberPlayer2(position: Vector2(-10, -10), iTipo: iTipo, size: tamano);
       add(emberPlayer2);
     }
     return super.onLoad();
@@ -336,7 +336,7 @@ class EmberPlayerBody extends BodyComponent
     Body cuerpo = world.createBody(definicionCuerpo);
 
     final shape = CircleShape();
-    shape.radius = tamano.x / 2;
+    shape.radius = tamano.x / 3;
     FixtureDef fixtureDef = FixtureDef(shape,
         density: 0.5, friction: 1, restitution: 0, userData: this);
     //debugMode = true;

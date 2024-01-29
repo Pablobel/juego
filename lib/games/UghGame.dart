@@ -14,6 +14,9 @@ import 'dart:async';
 import 'package:juego/elementos/Estrella.dart';
 import 'package:juego/elementos/Gota.dart';
 import 'package:juego/players/EmberPlayer.dart';
+import '../bodies/PuertaBody.dart';
+import '../bodies/RayoBody.dart';
+import '../elementos/Puerta.dart';
 import '../elementos/Vidas.dart';
 import '../elementos/VidasVacias.dart';
 
@@ -22,6 +25,7 @@ class UghGame extends Forge2DGame
   //final world = World();
   late final CameraComponent cameraComponent;
   late EmberPlayerBody _player1, _player2;
+  late RayoBody rayoBody1, rayoBody2;
   late TiledComponent mapComponent;
   List<dynamic> vidas1 = [];
   List<dynamic> vidas2 = [];
@@ -39,7 +43,9 @@ class UghGame extends Forge2DGame
       'water_enemy.png',
       'tilemap1_32.png',
       'megaman.png',
-      'megamanrojo.png'
+      'megamanrojo.png',
+      'puerta.png',
+      'rayo.png'
     ]);
 
     cameraComponent = CameraComponent(world: world);
@@ -48,6 +54,18 @@ class UghGame extends Forge2DGame
 
     mapComponent = await TiledComponent.load('mapa1.tmx', Vector2.all(32));
     add(mapComponent);
+
+    PuertaBody puertaBody =
+        PuertaBody(posicionInicial: Vector2(800, 370), tamano: Vector2(75, 75));
+    add(puertaBody);
+
+    rayoBody1 =
+        RayoBody(posicionInicial: Vector2(700, 240), tamano: Vector2(100, 400));
+    add(rayoBody1);
+
+    rayoBody2 =
+        RayoBody(posicionInicial: Vector2(900, 240), tamano: Vector2(100, 400));
+    add(rayoBody2);
 
     ObjectGroup? estrellas =
         mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
@@ -80,12 +98,12 @@ class UghGame extends Forge2DGame
     _player1 = EmberPlayerBody(
         initialPosition: Vector2(100, canvasSize.y - 50),
         iTipo: EmberPlayerBody.PLAYER_1,
-        tamano: Vector2(50, 100));
+        tamano: Vector2(75, 75));
     _player1.onBeginContact = colisionesPlayer1;
     _player2 = EmberPlayerBody(
         initialPosition: Vector2(1500, canvasSize.y - 51),
         iTipo: EmberPlayerBody.PLAYER_2,
-        tamano: Vector2(50, 100));
+        tamano: Vector2(75, 75));
     _player2.onBeginContact = colisionesPlayer2;
     add(_player1);
     add(_player2);
@@ -107,7 +125,11 @@ class UghGame extends Forge2DGame
       }
     } else if (objeto1 is EstrellaBody) {
       objeto1.removeFromParent();
-      estrellasConseguidas +=1;
+      estrellasConseguidas += 1;
+    } else if (objeto1 is RayoBody) {
+      _player1.vidas = 0;
+    } else if (objeto1 is PuertaBody) {
+      mostrarVictoria();
     }
 
     if (_player1.vidas == 0) {
@@ -115,6 +137,10 @@ class UghGame extends Forge2DGame
       if (_player2.vidas == 0) {
         mostrarGameOver();
       }
+    }
+    if (estrellasConseguidas == 10) {
+      rayoBody1.removeFromParent();
+      rayoBody2.removeFromParent();
     }
   }
 
@@ -129,6 +155,10 @@ class UghGame extends Forge2DGame
       }
     } else if (objeto1 is EstrellaBody) {
       objeto1.removeFromParent();
+    } else if (objeto1 is RayoBody) {
+      _player2.vidas = 0;
+    } else if (objeto1 is PuertaBody) {
+      mostrarVictoria();
     }
 
     if (_player2.vidas == 0) {
@@ -137,6 +167,8 @@ class UghGame extends Forge2DGame
         mostrarGameOver();
       }
     }
+    rayoBody1.removeFromParent();
+    rayoBody2.removeFromParent();
   }
 
   void mostrarGameOver() {
@@ -148,6 +180,17 @@ class UghGame extends Forge2DGame
       ..anchor = Anchor.center
       ..position = size / 2; // Centrar en la pantalla
     add(gameOverText);
+  }
+
+  void mostrarVictoria() {
+    var victoria = TextComponent(
+      text: 'YOU WIN',
+      textRenderer:
+          TextPaint(style: TextStyle(fontSize: 200, color: Colors.red)),
+    )
+      ..anchor = Anchor.center
+      ..position = size / 2; // Centrar en la pantalla
+    add(victoria);
   }
 
   void cargarVidasPlayer1(int vidasRestantes) {

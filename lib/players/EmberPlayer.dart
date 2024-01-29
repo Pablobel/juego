@@ -31,10 +31,10 @@ class EmberPlayer extends SpriteAnimationComponent
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache('megaman.png'),
       SpriteAnimationData.sequenced(
-        amount: 4,
-        amountPerRow: 2,
-        textureSize: Vector2(132,139.5),
-        stepTime: 0.12,
+        amount: 10,
+        amountPerRow: 5,
+        textureSize: Vector2(125,125),
+        stepTime: 0.08,
       ),
     );
 
